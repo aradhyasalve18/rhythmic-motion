@@ -1,0 +1,268 @@
+/* ===== Wedding Planner Multi-Step Form ===== */
+
+.planner-container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ---- Progress Bar ---- */
+.planner-progress {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+.planner-progress::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 32px;
+  right: 32px;
+  height: 2px;
+  background: var(--color-gold-300);
+  z-index: 0;
+}
+
+.planner-step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1;
+  flex: 1;
+}
+
+.planner-step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: var(--color-bg-soft);
+  color: var(--color-ink-faint);
+  border: 2px solid var(--color-gold-300);
+  transition: all 0.3s ease;
+}
+.planner-step-indicator.is-active .planner-step-circle {
+  background: var(--color-gold-500);
+  color: #fff;
+  border-color: var(--color-gold-500);
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.25);
+}
+.planner-step-indicator.is-complete .planner-step-circle {
+  background: var(--color-gold-700);
+  color: #fff;
+  border-color: var(--color-gold-700);
+}
+
+.planner-step-label {
+  font-size: 0.75rem;
+  color: var(--color-ink-faint);
+  text-align: center;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.planner-step-indicator.is-active .planner-step-label {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* ---- Card ---- */
+.planner-card {
+  padding: 2.5rem;
+  border-radius: var(--radius-lg, 16px);
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.planner-step {
+  flex: 1;
+}
+
+.planner-step-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--color-ink);
+  margin-bottom: 0.5rem;
+}
+
+/* ---- Service Selection Grid ---- */
+.planner-service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.planner-service-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 2px solid var(--color-gold-300);
+  border-radius: var(--radius-md, 12px);
+  background: var(--color-bg);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-ink);
+}
+.planner-service-option:hover {
+  border-color: var(--color-gold-500);
+  background: var(--color-bg-soft);
+  transform: translateY(-2px);
+}
+.planner-service-option.is-selected {
+  border-color: var(--color-gold-500);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(226, 142, 154, 0.08));
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.planner-service-icon {
+  font-size: 1.8rem;
+}
+.planner-service-label {
+  font-weight: 500;
+  flex: 1;
+}
+.planner-service-check {
+  color: var(--color-gold-700);
+  animation: pop-in 0.25s ease;
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ---- Form Fields ---- */
+.planner-form-group {
+  margin-bottom: 1.5rem;
+}
+.planner-form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.planner-form-group input,
+.planner-form-group textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 2px solid var(--color-gold-300);
+  border-radius: var(--radius-md, 12px);
+  background: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-ink);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.planner-form-group input:focus,
+.planner-form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-gold-500);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+.planner-form-group textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+
+/* ---- Word Counter ---- */
+.planner-word-counter {
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--color-ink-faint);
+  margin-top: 0.5rem;
+}
+.planner-word-warning {
+  color: #e88a1a;
+  font-weight: 600;
+}
+.planner-word-danger {
+  color: #d93025;
+  font-weight: 700;
+}
+
+/* ---- Review ---- */
+.planner-review {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.planner-review-row {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-gold-300);
+}
+.planner-review-row:last-child {
+  border-bottom: none;
+}
+.planner-review-label {
+  font-weight: 700;
+  min-width: 100px;
+  color: var(--color-gold-700);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  padding-top: 2px;
+}
+
+/* ---- Navigation ---- */
+.planner-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-gold-300);
+}
+.planner-nav .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.planner-nav .btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.planner-send-btn {
+  background: #25D366 !important;
+  border-color: #25D366 !important;
+}
+.planner-send-btn:hover {
+  background: #1da851 !important;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .planner-card {
+    padding: 1.5rem;
+  }
+  .planner-progress {
+    gap: 0.25rem;
+  }
+  .planner-step-label {
+    font-size: 0.65rem;
+  }
+  .planner-service-grid {
+    grid-template-columns: 1fr;
+  }
+  .planner-review-row {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}

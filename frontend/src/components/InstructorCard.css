@@ -1,0 +1,68 @@
+.instructor-card {
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.instructor-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 48px -20px rgba(43, 24, 16, 0.3);
+}
+
+.instructor-image-wrapper {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background: var(--color-bg-soft);
+  position: relative;
+}
+
+.instructor-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.instructor-card:hover .instructor-image {
+  transform: scale(1.08);
+}
+
+.instructor-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.instructor-card-name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 1.2rem;
+}
+
+.instructor-card-role {
+  color: var(--color-gold-700);
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin: 0.3rem 0 0.6rem;
+}
+
+.instructor-card .stars {
+  font-size: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+
+.instructor-card-bio {
+  font-size: 0.88rem;
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}

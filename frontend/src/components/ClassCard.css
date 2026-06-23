@@ -1,0 +1,107 @@
+.class-card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.class-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-soft);
+}
+
+.class-card-image-wrapper {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  background: var(--color-bg-soft);
+}
+
+.class-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.class-card:hover .class-card-image {
+  transform: scale(1.08);
+}
+
+.class-card-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(43, 24, 16, 0.75) 0%, rgba(43, 24, 16, 0.1) 60%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+}
+
+.class-card-style {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  color: #fff3ea;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.class-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.class-card-name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
+}
+
+.class-card-desc {
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.class-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+}
+
+.class-card-meta li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.class-card-batch {
+  padding-left: 1.4rem;
+  font-weight: 600;
+  color: var(--color-gold-700);
+}
+
+.class-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--color-peach-300);
+}
+
+.class-card-price {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-ink);
+}

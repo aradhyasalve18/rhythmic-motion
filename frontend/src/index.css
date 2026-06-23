@@ -1,0 +1,497 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* ===================== Design Tokens ===================== */
+:root {
+  /* Rose / Pink scale — rich, romantic, high contrast */
+  --color-bg: #fef9f6;
+  --color-bg-soft: #fdf0ea;
+  --color-peach-100: #fbe1d8;
+  --color-peach-300: #e8a5a0;
+  --color-peach-500: #c76b78;
+  --color-peach-700: #9e3f55;
+
+  /* Gold scale — true metallic gold */
+  --color-gold-300: #dcc9a0;
+  --color-gold-500: #b8860b;
+  --color-gold-700: #8b6508;
+
+  /* Ink / neutrals — deep, warm, highly readable */
+  --color-ink: #1e1215;
+  --color-ink-soft: #4a3540;
+  --color-ink-faint: #7a6670;
+  --color-cream-paper: #fffcfa;
+  --color-maroon: #7a2e3f;
+
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #e6cfa1 0%, #d4af37 50%, #e6cfa1 100%);
+  --gradient-peach: linear-gradient(135deg, #fbe1d8 0%, #f1c7bd 50%, #fbe1d8 100%);
+  --gradient-spotlight: linear-gradient(135deg, #fdf0ea 0%, #fbe1d8 50%, #fdf0ea 100%);
+
+  /* Type */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Outfit', system-ui, -apple-system, sans-serif;
+
+  /* Geometry */
+  --radius-sm: 0.6rem;
+  --radius-md: 1.1rem;
+  --radius-lg: 1.85rem;
+  --radius-pill: 999px;
+
+  /* Shadow */
+  --shadow-soft: 0 24px 48px -24px rgba(30, 18, 21, 0.22);
+  --shadow-card: 0 14px 28px -16px rgba(30, 18, 21, 0.18);
+
+  --container-width: 1180px;
+  --header-height: 112px;
+}
+
+/* ===================== Utilities ===================== */
+.required-star {
+  color: #d93025;
+  font-weight: 700;
+  font-size: 1.1em;
+  margin-left: 2px;
+}
+
+/* ===================== Reset ===================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-gold-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* ===================== Layout ===================== */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.section {
+  padding: clamp(3rem, 6vw, 5.5rem) 0;
+}
+
+.section-soft {
+  background: var(--color-bg-soft);
+}
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.section-head.center {
+  max-width: 680px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-head-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+/* ===================== Typography ===================== */
+.eyebrow {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-gold-700);
+  letter-spacing: 0.02em;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  font-size: clamp(2.1rem, 4.2vw, 3.1rem);
+  line-height: 1.04;
+  color: var(--color-ink);
+}
+
+.section-sub {
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  color: var(--color-ink-soft);
+  margin-top: 0.85rem;
+  line-height: 1.65;
+}
+
+/* ===================== Buttons ===================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.9rem 1.85rem;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-gold {
+  background: var(--gradient-gold);
+  background-size: 200% 200%;
+  animation: shimmer 4s ease-in-out infinite;
+  color: var(--color-ink);
+  box-shadow: 0 12px 22px -10px rgba(212, 162, 59, 0.7);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 16px 28px -10px rgba(212, 162, 59, 0.85);
+  transform: translateY(-2px);
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--color-gold-500);
+  color: var(--color-gold-700);
+}
+
+.btn-outline:hover {
+  background: var(--color-gold-300);
+  border-color: var(--color-gold-300);
+}
+
+.btn-peach {
+  background: var(--color-peach-500);
+  color: #fff3ea;
+}
+
+.btn-peach:hover {
+  background: var(--color-peach-700);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ink);
+  padding: 0.6rem 0.2rem;
+}
+
+.btn-ghost:hover {
+  color: var(--color-gold-700);
+}
+
+.btn-sm {
+  padding: 0.6rem 1.3rem;
+  font-size: 0.85rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ===================== Chips / Tags ===================== */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-cream-paper);
+  border: 1px solid var(--color-peach-300);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip.is-active,
+.chip:hover {
+  background: var(--gradient-gold);
+  background-size: 200% 200%;
+  animation: shimmer 4s ease-in-out infinite;
+  color: var(--color-ink);
+  border-color: transparent;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-maroon);
+  color: #fff3ea;
+}
+
+/* ===================== Cards ===================== */
+.card {
+  background: var(--color-cream-paper);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(212, 162, 59, 0.15);
+}
+
+/* ===================== Page header (inner pages) ===================== */
+.page-header {
+  padding: calc(var(--header-height) + 2.75rem) 0 3rem;
+  background: var(--gradient-spotlight);
+  background-size: 200% 200%;
+  animation: shimmer 12s ease-in-out infinite;
+  text-align: center;
+}
+
+.page-header .section-title {
+  margin-top: 0.4rem;
+}
+
+/* ===================== Forms ===================== */
+.form-grid {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+}
+
+.form-field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  margin-bottom: 0.4rem;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-peach-300);
+  background: #fff;
+  color: var(--color-ink);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: var(--color-gold-500);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(212, 162, 59, 0.2);
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ===================== Star rating ===================== */
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--color-gold-500);
+}
+
+/* ===================== Misc utility ===================== */
+.step-divider {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0.5rem 1.5rem;
+  opacity: 0.9;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.muted {
+  color: var(--color-ink-soft);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===================== Custom Scrollbar ===================== */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-peach-300);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-peach-500);
+}
+
+/* ===================== Entrance Animations ===================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Delay classes */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Scroll-triggered reveal animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delay transitions for scroll reveals */
+.scroll-reveal.delay-100 { transition-delay: 100ms; }
+.scroll-reveal.delay-200 { transition-delay: 200ms; }
+.scroll-reveal.delay-300 { transition-delay: 300ms; }
+.scroll-reveal.delay-400 { transition-delay: 400ms; }
+.scroll-reveal.delay-500 { transition-delay: 500ms; }
+
+/* ===================== Animations ===================== */
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

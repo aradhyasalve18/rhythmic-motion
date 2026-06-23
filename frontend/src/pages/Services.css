@@ -1,0 +1,90 @@
+/* ===== Services Page (reuses classes layout) ===== */
+
+.classes-section { padding-top: 1rem; }
+
+.classes-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.classes-count {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.classes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* ===== Service Detail Card ===== */
+.service-detail-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-lg, 16px);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.service-detail-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+}
+
+.service-detail-card-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+  flex-shrink: 0;
+}
+.service-detail-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.service-detail-card:hover .service-detail-card-img {
+  transform: scale(1.06);
+}
+
+.service-detail-card-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.service-detail-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* ===== Bottom CTA ===== */
+.classes-cta {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.classes-cta-icon {
+  color: var(--color-gold-500);
+  margin-bottom: 1rem;
+}
+.classes-cta-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .classes-grid {
+    grid-template-columns: 1fr;
+  }
+}
