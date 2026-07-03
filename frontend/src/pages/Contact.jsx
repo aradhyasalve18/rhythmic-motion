@@ -168,10 +168,7 @@ export default function Contact() {
               </a>
             </div>
 
-            <div className="contact-map card" role="img" aria-label="Map placeholder for the studio location">
-              <MapPin size={36} />
-              <span>Map preview — drop in your Google Maps embed here</span>
-            </div>
+
           </div>
         </div>
       </section>
