@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Sparkles } from 'lucide-react'
+import { motion } from 'framer-motion'
 import PageHeader from '../components/PageHeader.jsx'
 import { servicesData, serviceCategories } from '../data/servicesData.js'
 import './Services.css'
@@ -46,10 +47,12 @@ export default function Services() {
           {/* Grid */}
           <div className="classes-grid">
             {filtered.map((service, index) => (
-              <div
+              <motion.div
                 key={service.id}
-                className="scroll-reveal"
-                style={{ transitionDelay: `${(index % 4) * 80}ms` }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.4, delay: (index % 4) * 0.08 }}
               >
                 <div className="service-detail-card card">
                   <div className="service-detail-card-img-wrapper">
@@ -69,7 +72,7 @@ export default function Services() {
                     </Link>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 

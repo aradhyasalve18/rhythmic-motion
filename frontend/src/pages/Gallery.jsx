@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { Camera } from 'lucide-react'
+import { motion } from 'framer-motion'
 import PageHeader from '../components/PageHeader.jsx'
 import Lightbox from '../components/Lightbox.jsx'
 import AnimatedCounter from '../components/AnimatedCounter.jsx'
@@ -54,11 +55,14 @@ export default function Gallery() {
           {/* Masonry-style grid */}
           <div className="gallery-grid">
             {filtered.map((item, index) => (
-              <button
+              <motion.button
                 type="button"
                 key={item.id}
-                className={`gallery-item card scroll-reveal ${index % 5 === 0 ? 'gallery-item--tall' : ''}`}
-                style={{ transitionDelay: `${(index % 6) * 80}ms` }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.4, delay: (index % 6) * 0.08 }}
+                className={`gallery-item card ${index % 5 === 0 ? 'gallery-item--tall' : ''}`}
                 onClick={() => setActiveIndex(index)}
               >
                 <img src={item.image} alt={item.title} className="gallery-item-img" />
@@ -69,7 +73,7 @@ export default function Gallery() {
                 <div className="gallery-item-zoom">
                   <Camera size={20} />
                 </div>
-              </button>
+              </motion.button>
             ))}
           </div>
 
