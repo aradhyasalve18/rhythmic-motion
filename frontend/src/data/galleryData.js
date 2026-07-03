@@ -6,12 +6,32 @@
 */
 
 export const galleryData = [
-  { id: 1, category: 'Venue', title: 'Royal Palace Banquet', image: '/images/wedding_venue.png' },
-  { id: 2, category: 'Catering', title: 'Fusion Dessert Counter', image: '/images/wedding_catering.png' },
-  { id: 3, category: 'Decor', title: 'Sunset Floral Mandap', image: '/images/wedding_decor.png' },
-  { id: 4, category: 'Styling', title: 'Traditional Bridal Lehenga', image: '/images/wedding_styling.png' },
-  { id: 5, category: 'Venue', title: 'Heritage Resort Lawn', image: '/images/wedding_venue.png' },
-  { id: 6, category: 'Decor', title: 'Golden Canopy Lighting', image: '/images/wedding_decor.png' },
+  { id: 1, category: 'Venue', title: 'Royal Palace Banquet', image: '/images/placeholder_venue_banquet.jpg' },
+  { id: 2, category: 'Food', title: 'Fusion Dessert Counter', image: '/images/placeholder_food_gourmet.jpg' },
+  { id: 3, category: 'Planning & Decor', title: 'Sunset Floral Mandap', image: '/images/placeholder_decor_floral.jpg' },
+  { id: 4, category: 'Bridal Wear', title: 'Traditional Bridal Lehenga', image: '/images/placeholder_wear_lehenga.jpg' },
+  { id: 5, category: 'Venue', title: 'Heritage Resort Lawn', image: '/images/placeholder_venue_lawns.jpg' },
+  { id: 6, category: 'Planning & Decor', title: 'Golden Canopy Lighting', image: '/images/placeholder_decor_floral.jpg' },
+  { id: 7, category: 'Photography', title: 'Cinematic Couple Portrait', image: '/images/placeholder_photo_wedding.jpg' },
+  { id: 8, category: 'Makeup', title: 'Flawless Bridal Makeup', image: '/images/placeholder_makeup_bridal.jpg' },
+  { id: 9, category: 'Groom Wear', title: 'Royal Sherwani', image: '/images/placeholder_wear_sherwani.jpg' },
+  { id: 10, category: 'Mehendi', title: 'Intricate Bridal Mehendi', image: '/images/placeholder_mehendi_art.jpg' },
+  { id: 11, category: 'Jewellery', title: 'Polki & Kundan Sets', image: '/images/placeholder_jewel_bridal.jpg' },
+  { id: 12, category: 'Invites & Gifts', title: 'Wax Seal Digital Invites', image: '/images/placeholder_invites_digital.jpg' },
+  { id: 13, category: 'Music & Dance', title: 'Sangeet Choreography', image: '/images/placeholder_music_choreo.jpg' }
 ]
 
-export const galleryCategories = ['All', 'Venue', 'Catering', 'Decor', 'Photography', 'Makeup', 'Mehendi', 'Entertainment', 'Styling']
+export const galleryCategories = [
+  'All', 
+  'Venue', 
+  'Photography', 
+  'Makeup', 
+  'Planning & Decor', 
+  'Bridal Wear', 
+  'Groom Wear', 
+  'Mehendi', 
+  'Jewellery', 
+  'Invites & Gifts', 
+  'Music & Dance', 
+  'Food'
+]

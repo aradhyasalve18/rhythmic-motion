@@ -77,6 +77,12 @@ export default function Gallery() {
             ))}
           </div>
 
+          {filtered.length === 0 && (
+            <p className="muted text-center" style={{ marginTop: '3rem', marginBottom: '3rem', fontSize: '1.1rem' }}>
+              More spectacular moments coming soon to this category.
+            </p>
+          )}
+
           {/* Stats bar */}
           <div className="gallery-stats">
             <div className="gallery-stat">
