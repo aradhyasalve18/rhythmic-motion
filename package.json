@@ -1,0 +1,15 @@
+{
+  "name": "wedding-platform",
+  "version": "1.0.0",
+  "description": "Full-stack wedding platform with consumer frontend, admin dashboard, and backend API",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix admin && npm install --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:admin": "npm run dev --prefix admin",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:admin\" \"npm run dev:frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

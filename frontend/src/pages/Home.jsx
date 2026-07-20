@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { io } from 'socket.io-client'
 import { siteConfig } from '../data/siteConfig.js'
-import { servicesData } from '../data/servicesData.js'
-import { testimonialsData } from '../data/testimonialsData.js'
-import { galleryData } from '../data/galleryData.js'
 import SectionDivider from '../components/SectionDivider.jsx'
 import TestimonialCarousel from '../components/TestimonialCarousel.jsx'
 import AnimatedCounter from '../components/AnimatedCounter.jsx'
 import './Home.css'
 
-const popularStyles = servicesData;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 
 const heroImages = [
   '/images/hero_banner.png',
@@ -21,6 +20,41 @@ const heroImages = [
 
 export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0)
+  
+  const [servicesData, setServicesData] = useState([])
+  const [testimonialsData, setTestimonialsData] = useState([])
+  const [galleryData, setGalleryData] = useState([])
+
+  const fetchAllData = async () => {
+    try {
+      const [servicesRes, testimonialsRes, galleryRes] = await Promise.all([
+        axios.get(`${API_URL}/api/services`),
+        axios.get(`${API_URL}/api/testimonials`),
+        axios.get(`${API_URL}/api/gallery`)
+      ])
+      
+      setServicesData(servicesRes.data.data || [])
+      setTestimonialsData(testimonialsRes.data.data || [])
+      setGalleryData(galleryRes.data.data || [])
+    } catch (err) {
+      console.error('Error fetching home data:', err)
+    }
+  }
+
+  useEffect(() => {
+    fetchAllData()
+
+    const socket = io(API_URL)
+    
+    socket.on('content_updated', (payload) => {
+      // If any of the content updates, refetch the home data
+      fetchAllData()
+    })
+
+    return () => {
+      socket.disconnect()
+    }
+  }, [])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -71,15 +105,15 @@ export default function Home() {
           </div>
 
           <div className="style-grid">
-            {popularStyles.map(({ name, description, image }, index) => (
+            {servicesData.slice(0, 4).map(({ _id, name, description, imageUrl }, index) => (
               <Link
                 to="/services"
-                key={name}
+                key={_id}
                 className="style-card card scroll-reveal"
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="style-card-image-container">
-                  <img src={image} alt={name} className="style-card-img" />
+                  <img src={imageUrl} alt={name} className="style-card-img" />
                 </div>
                 <div className="style-card-content">
                   <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', color: 'var(--color-ink)' }}>{name}</h3>
@@ -88,6 +122,12 @@ export default function Home() {
                 </div>
               </Link>
             ))}
+            
+            {servicesData.length === 0 && (
+               <div style={{ textAlign: 'center', gridColumn: '1 / -1', padding: '2rem', color: 'var(--color-ink)' }}>
+                 More premium services coming soon.
+               </div>
+            )}
           </div>
         </div>
       </section>
@@ -98,73 +138,58 @@ export default function Home() {
       <section className="section section-soft about-section">
         <div className="container about-inner">
           <div className="about-text-container scroll-reveal">
-            <span className="eyebrow">{siteConfig.name}</span>
-            <h2 className="section-title">Your Fairy Tale Starts Here</h2>
-            <p className="section-sub">{siteConfig.description}</p>
-            <Link to="/planner" className="btn btn-gold" style={{ marginTop: '1.5rem' }}>
-              Begin Your Journey
-            </Link>
-          </div>
-          <div className="about-media scroll-reveal delay-200">
-            <div className="about-img-wrapper">
-              <img src="/images/couple_1.png" alt="Happy Couple" className="about-img card" />
-            </div>
+            <span className="eyebrow">About The Wedding Bells</span>
+            <h2 className="h2 about-title">Where Dreams Become Reality</h2>
+            <p className="lead" style={{ marginBottom: '1.5rem', color: 'var(--color-slate)' }}>
+              Founded on the belief that every love story deserves a beautiful celebration, we are a team of passionate planners, designers, and artisans.
+            </p>
+            <p style={{ marginBottom: '2.5rem', color: 'var(--color-gray)' }}>
+              With over a decade of experience in crafting luxury weddings, we handle everything from the grandest venues to the smallest floral details, ensuring your special day is stress-free and spectacular.
+            </p>
+            
             <div className="about-stats">
-              {siteConfig.stats.map((stat) => (
-                <div className="about-stat card" key={stat.label}>
-                  <span className="about-stat-value">
-                    <AnimatedCounter value={stat.value} />
-                  </span>
-                  <span className="about-stat-label">{stat.label}</span>
-                </div>
-              ))}
+              <div className="about-stat">
+                <span className="about-stat-number"><AnimatedCounter value={`${galleryData.length > 500 ? galleryData.length : '500'}+`} /></span>
+                <span className="about-stat-label">Weddings<br />Planned</span>
+              </div>
+              <div className="about-stat">
+                <span className="about-stat-number"><AnimatedCounter value="15+" /></span>
+                <span className="about-stat-label">Awards<br />Won</span>
+              </div>
             </div>
+          </div>
+          
+          <div className="about-image-container scroll-reveal" style={{ transitionDelay: '200ms' }}>
+            <img src="/images/couple_1.png" alt="Happy couple" className="about-img" />
           </div>
         </div>
       </section>
 
-      <SectionDivider />
-
-      {/* --------------------------- TESTIMONIALS --------------------------- */}
-      <section className="section">
+      {/* -------------------------- TESTIMONIALS -------------------------- */}
+      <section className="section bg-pattern">
         <div className="container">
           <div className="section-head center">
-            <span className="eyebrow">Love Stories</span>
-            <h2 className="section-title">Happy Couples</h2>
+            <span className="eyebrow" style={{ color: 'var(--color-clay)' }}>Real Love Stories</span>
+            <h2 className="section-title">Words From Our Couples</h2>
           </div>
-          <TestimonialCarousel testimonials={testimonialsData} />
+          {testimonialsData.length > 0 ? (
+            <TestimonialCarousel testimonials={testimonialsData} />
+          ) : (
+             <div style={{ textAlign: 'center', color: 'var(--color-slate)' }}>Client stories coming soon.</div>
+          )}
         </div>
       </section>
-
-      {/* ----------------------------- GALLERY TEASER ----------------------------- */}
-      <section className="section section-soft">
-        <div className="container">
-          <div className="section-head-row">
-            <div>
-              <span className="eyebrow">Get Inspired</span>
-              <h2 className="section-title">Wedding Gallery</h2>
-            </div>
-            <Link to="/gallery" className="btn btn-outline">
-              View Full Gallery
-            </Link>
-          </div>
-
-          <div className="gallery-teaser">
-            {galleryData.slice(0, 5).map((item, index) => (
-              <Link
-                to="/gallery"
-                key={item.id}
-                className="gallery-teaser-item card scroll-reveal"
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <img src={item.image} alt={item.title} className="gallery-teaser-img" />
-                <div className="gallery-teaser-overlay">
-                  <span className="tag">{item.category}</span>
-                  <h3>{item.title}</h3>
-                </div>
-              </Link>
-            ))}
-          </div>
+      
+      {/* -------------------------- BOTTOM CTA -------------------------- */}
+      <section className="section center" style={{ backgroundColor: 'var(--color-paper-dark)' }}>
+        <div className="container scroll-reveal">
+          <h2 className="h2" style={{ marginBottom: '1.5rem' }}>Ready to Begin Your Journey?</h2>
+          <p className="lead" style={{ maxWidth: '600px', margin: '0 auto 2.5rem', color: 'var(--color-gray)' }}>
+            Let us turn your vision into a breathtaking reality. Schedule a consultation with our expert wedding planners today.
+          </p>
+          <Link to="/contact" className="btn btn-gold btn-large">
+            Contact Us Now
+          </Link>
         </div>
       </section>
     </>

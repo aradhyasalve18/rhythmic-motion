@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { CheckCircle2, Clock, Mail, MapPin, Phone, Send, MessageCircle } from 'lucide-react'
 import PageHeader from '../components/PageHeader.jsx'
 import { siteConfig } from '../data/siteConfig.js'
@@ -9,7 +9,15 @@ import './Contact.css'
 const emptyForm = { name: '', phone: '', email: '', interest: '', message: '' }
 
 export default function Contact() {
-  const [form, setForm] = useState(emptyForm)
+  const [searchParams] = useSearchParams()
+  const preSelectedService = searchParams.get('service')
+  const servicePrice = searchParams.get('price')
+
+  const [form, setForm] = useState({ 
+    ...emptyForm, 
+    interest: preSelectedService || '',
+    message: preSelectedService && servicePrice ? `Hi, I am interested in booking the ${preSelectedService} package which is priced at ₹${servicePrice}. Could you please provide more details?` : ''
+  })
   const [submitted, setSubmitted] = useState(false)
 
   function handleChange(e) {
@@ -87,6 +95,9 @@ export default function Contact() {
                             {style}
                           </option>
                         ))}
+                      {preSelectedService && !serviceCategories.includes(preSelectedService) && (
+                        <option value={preSelectedService}>{preSelectedService}</option>
+                      )}
                       <option value="General Enquiry">General Enquiry</option>
                     </select>
                   </div>
