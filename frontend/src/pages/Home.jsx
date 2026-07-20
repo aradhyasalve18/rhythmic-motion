@@ -8,7 +8,7 @@ import TestimonialCarousel from '../components/TestimonialCarousel.jsx'
 import AnimatedCounter from '../components/AnimatedCounter.jsx'
 import './Home.css'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const API_URL = import.meta.env.VITE_API_URL || 'https://theweddingbells.onrender.com'
 
 const heroImages = [
   '/images/hero_banner.png',

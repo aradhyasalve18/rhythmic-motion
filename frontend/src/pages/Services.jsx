@@ -7,7 +7,7 @@ import { io } from 'socket.io-client'
 import PageHeader from '../components/PageHeader.jsx'
 import './Services.css'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const API_URL = import.meta.env.VITE_API_URL || 'https://theweddingbells.onrender.com'
 
 export default function Services() {
   const [servicesData, setServicesData] = useState([])
