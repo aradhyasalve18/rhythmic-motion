@@ -80,10 +80,12 @@
   border-radius: 50%;
   background-color: #bb86fc;
   color: #000;
-  font-size: 30px;
+  font-size: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
+  line-height: 0;
+  padding-bottom: 5px;
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.5);

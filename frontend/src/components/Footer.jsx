@@ -71,11 +71,13 @@ export default function Footer() {
         </div>
 
         <div className="footer-col">
-          <h4>Our Services</h4>
-          <Link to="/services">Royal Venues</Link>
+          <h4>Categories</h4>
+          <Link to="/services">Royal Venues & Estates</Link>
           <Link to="/services">Gourmet Catering</Link>
           <Link to="/services">Exquisite Decor</Link>
           <Link to="/services">Styling Bride & Groom</Link>
+          <Link to="/services">Photography & Videography</Link>
+          <Link to="/services">Entertainment & Performances</Link>
         </div>
 
         <div className="footer-col footer-contact">
@@ -86,9 +88,11 @@ export default function Footer() {
           <p>
             <Phone size={16} /> <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}>{siteConfig.phone}</a>
           </p>
+          {/* 
           <p>
             <Mail size={16} /> <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
           </p>
+          */}
           <p className="footer-hours">{siteConfig.hours}</p>
         </div>
       </div>

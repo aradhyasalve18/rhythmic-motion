@@ -1,16 +1,11 @@
-import { useState } from 'react'
-import { Check, ChevronLeft, ChevronRight, Send } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { Check, ChevronLeft, ChevronRight, Send, ChevronDown } from 'lucide-react'
+import axios from 'axios'
 import PageHeader from '../components/PageHeader.jsx'
 import { siteConfig } from '../data/siteConfig.js'
 import './Planner.css'
 
-const serviceOptions = [
-  { id: 'venue', label: 'Royal Venues & Estates', icon: '🏰' },
-  { id: 'catering', label: 'Gourmet Catering', icon: '🍽️' },
-  { id: 'decor', label: 'Exquisite Decor', icon: '🌸' },
-  { id: 'styling', label: 'Styling Bride & Groom', icon: '👗' },
-]
-
+const API_URL = import.meta.env.VITE_API_URL || 'https://theweddingbells.onrender.com'
 const WORD_LIMIT = 1000
 const TOTAL_STEPS = 4
 
@@ -20,23 +15,61 @@ function countWords(text) {
 
 export default function Planner() {
   const [step, setStep] = useState(0)
-  const [services, setServices] = useState([])
+  const [servicesList, setServicesList] = useState([])
+  const [loading, setLoading] = useState(true)
+  
+  // Form State
+  const [selectedServices, setSelectedServices] = useState([])
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [description, setDescription] = useState('')
+  
+  // Custom Dropdown State
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const dropdownRef = useRef(null)
 
   const wordCount = countWords(description)
   const wordsRemaining = WORD_LIMIT - wordCount
 
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/api/services`)
+        setServicesList(res.data.data || [])
+      } catch (error) {
+        console.error('Failed to fetch services:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchServices()
+  }, [])
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [dropdownRef])
+
   function toggleService(id) {
-    setServices((prev) =>
+    setSelectedServices((prev) =>
       prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
     )
   }
 
+  const totalPrice = selectedServices.reduce((sum, id) => {
+    const service = servicesList.find(s => s._id === id);
+    return sum + (service ? service.price : 0);
+  }, 0);
+
   function canProceed() {
-    if (step === 0) return services.length > 0
+    if (step === 0) return selectedServices.length > 0
     if (step === 1) return name.trim() && email.trim() && phone.trim()
     if (step === 2) return wordCount > 0 && wordCount <= WORD_LIMIT
     return true
@@ -50,9 +83,8 @@ export default function Planner() {
   }
 
   function buildWhatsAppMessage() {
-    const selectedLabels = serviceOptions
-      .filter((s) => services.includes(s.id))
-      .map((s) => s.label)
+    const selectedLabels = selectedServices
+      .map(id => servicesList.find(s => s._id === id)?.name || '')
       .join(', ')
 
     const msg = [
@@ -63,6 +95,7 @@ export default function Planner() {
       `*Phone:* ${phone}`,
       ``,
       `*Services:* ${selectedLabels}`,
+      `*Estimated Total:* ₹${totalPrice.toLocaleString('en-IN')}`,
       ``,
       `*Requirements:*`,
       description,
@@ -105,23 +138,52 @@ export default function Planner() {
             {step === 0 && (
               <div className="planner-step animate-fade-in">
                 <h2 className="planner-step-title">Which services are you interested in? <span className="required-star">*</span></h2>
-                <p className="muted" style={{ marginBottom: '2rem' }}>Select one or more to get started.</p>
-                <div className="planner-service-grid">
-                  {serviceOptions.map((s) => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      className={`planner-service-option ${services.includes(s.id) ? 'is-selected' : ''}`}
-                      onClick={() => toggleService(s.id)}
+                <p className="muted" style={{ marginBottom: '2rem' }}>Select one or more packages from the dropdown to build your estimate.</p>
+                
+                {loading ? (
+                  <p>Loading available services...</p>
+                ) : (
+                  <div className="planner-dropdown-container" ref={dropdownRef}>
+                    <div 
+                      className="planner-dropdown-header"
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
                     >
-                      <span className="planner-service-icon">{s.icon}</span>
-                      <span className="planner-service-label">{s.label}</span>
-                      {services.includes(s.id) && (
-                        <span className="planner-service-check"><Check size={18} /></span>
-                      )}
-                    </button>
-                  ))}
-                </div>
+                      <span>
+                        {selectedServices.length === 0 
+                          ? 'Select Services...' 
+                          : `${selectedServices.length} Service(s) Selected`}
+                      </span>
+                      <ChevronDown size={20} className={`dropdown-icon ${dropdownOpen ? 'open' : ''}`} />
+                    </div>
+                    
+                    {dropdownOpen && (
+                      <div className="planner-dropdown-list">
+                        {servicesList.map((service) => (
+                          <div 
+                            key={service._id} 
+                            className={`planner-dropdown-item ${selectedServices.includes(service._id) ? 'selected' : ''}`}
+                            onClick={() => toggleService(service._id)}
+                          >
+                            <div className="item-details">
+                              <span className="item-name">{service.name}</span>
+                              <span className="item-price">₹{service.price.toLocaleString('en-IN')}</span>
+                            </div>
+                            {selectedServices.includes(service._id) && (
+                              <Check size={18} className="item-check" />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {selectedServices.length > 0 && (
+                  <div className="planner-price-estimate">
+                    <h3>Estimated Total:</h3>
+                    <div className="price-amount">₹{totalPrice.toLocaleString('en-IN')}</div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -207,7 +269,11 @@ export default function Planner() {
                 <div className="planner-review">
                   <div className="planner-review-row">
                     <span className="planner-review-label">Services</span>
-                    <span>{serviceOptions.filter((s) => services.includes(s.id)).map((s) => s.label).join(', ')}</span>
+                    <span>{selectedServices.map(id => servicesList.find(s => s._id === id)?.name).join(', ')}</span>
+                  </div>
+                  <div className="planner-review-row">
+                    <span className="planner-review-label">Estimated Total</span>
+                    <span style={{ fontWeight: 600, color: 'var(--color-gold)' }}>₹{totalPrice.toLocaleString('en-IN')}</span>
                   </div>
                   <div className="planner-review-row">
                     <span className="planner-review-label">Name</span>

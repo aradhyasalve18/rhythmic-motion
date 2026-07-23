@@ -27,8 +27,38 @@ export default function Contact() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    // No backend wired up yet — replace this with your contact API / email service.
+    
+    // Drafts an email to the business
+    const subject = encodeURIComponent(`New Inquiry from ${form.name}`)
+    const body = encodeURIComponent(`Name: ${form.name}\nPhone: ${form.phone}\nInterested in: ${form.interest}\n\nMessage:\n${form.message}`)
+    
+    const mailtoLink = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`
+    window.location.href = mailtoLink
+
     setSubmitted(true)
+  }
+
+  function handleWhatsApp(e) {
+    e.preventDefault()
+    if (!form.name || !form.phone || !form.message) {
+      alert("Please fill in your name, phone, and message.")
+      return
+    }
+
+    const msg = [
+      `*New Inquiry — ${siteConfig.name}*`,
+      ``,
+      `*Name:* ${form.name}`,
+      `*Email:* ${form.email || 'N/A'}`,
+      `*Phone:* ${form.phone}`,
+      `*Interested In:* ${form.interest || 'General Enquiry'}`,
+      ``,
+      `*Message:*`,
+      form.message,
+    ].join('\n')
+
+    const url = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(msg)}`
+    window.open(url, '_blank')
   }
 
   return (
@@ -114,9 +144,16 @@ export default function Contact() {
                     />
                   </div>
 
-                  <button type="submit" className="btn btn-gold btn-block">
-                    Send Message
-                  </button>
+                  <div className="contact-form-actions">
+                    {/* 
+                    <button type="submit" className="btn btn-outline">
+                      Send Email
+                    </button>
+                    */}
+                    <button type="button" className="btn btn-gold whatsapp-btn" onClick={handleWhatsApp}>
+                      <MessageCircle size={18} /> Send via WhatsApp
+                    </button>
+                  </div>
                 </form>
               </>
             ) : (
@@ -145,9 +182,11 @@ export default function Contact() {
               <p>
                 <Phone size={18} /> <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}>{siteConfig.phone}</a>
               </p>
+              {/* 
               <p>
                 <Mail size={18} /> <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
               </p>
+              */}
               <p>
                 <Clock size={18} /> <span>{siteConfig.hours}</span>
               </p>

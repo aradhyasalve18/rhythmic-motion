@@ -1,0 +1,115 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content.review-modal {
+  background: var(--color-bg);
+  width: 100%;
+  max-width: 500px;
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: modal-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modal-pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: transparent;
+  border: none;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.modal-close:hover {
+  color: var(--color-ink);
+  background: var(--color-bg-soft);
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--color-ink);
+  margin-bottom: 0.25rem;
+}
+
+.review-stars-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.review-star {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.review-star:hover {
+  transform: scale(1.15);
+}
+
+.review-form .form-group {
+  margin-bottom: 1.25rem;
+}
+
+.review-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--color-ink);
+  font-size: 0.9rem;
+}
+
+.review-form input,
+.review-form textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid var(--color-gold-300);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-ink);
+  transition: border-color 0.2s;
+}
+
+.review-form input:focus,
+.review-form textarea:focus {
+  outline: none;
+  border-color: var(--color-gold-500);
+}
+
+.modal-error {
+  background: #fff3f3;
+  color: #d93025;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  border: 1px solid #ffd6d6;
+}

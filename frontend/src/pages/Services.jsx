@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import axios from 'axios'
 import { io } from 'socket.io-client'
 import PageHeader from '../components/PageHeader.jsx'
+import ReviewModal from '../components/ReviewModal.jsx'
 import './Services.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://theweddingbells.onrender.com'
@@ -14,6 +15,7 @@ export default function Services() {
   const [categories, setCategories] = useState(['All'])
   const [activeStyle, setActiveStyle] = useState('All')
   const [loading, setLoading] = useState(true)
+  const [reviewServiceId, setReviewServiceId] = useState(null)
 
   const fetchServices = async () => {
     try {
@@ -116,14 +118,28 @@ export default function Services() {
                         <p className="muted" style={{ flexGrow: 1 }}>{service.description}</p>
                         
                         {/* Reviews Count */}
-                        {service.reviews && service.reviews.length > 0 && (
-                          <div style={{ marginTop: '10px', fontSize: '0.85rem', color: 'var(--color-gold)' }}>
-                            {'⭐'.repeat(Math.round(service.reviews.reduce((acc, r) => acc + r.rating, 0) / service.reviews.length))} 
-                            {' '} ({service.reviews.length} reviews)
+                        <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div style={{ fontSize: '0.9rem', color: 'var(--color-gold)' }}>
+                            {service.reviews && service.reviews.length > 0 ? (
+                              <>
+                                {'★'.repeat(Math.round(service.reviews.reduce((acc, r) => acc + r.rating, 0) / service.reviews.length))}
+                                {'☆'.repeat(5 - Math.round(service.reviews.reduce((acc, r) => acc + r.rating, 0) / service.reviews.length))}
+                                <span className="muted" style={{ marginLeft: '5px' }}>({service.reviews.length})</span>
+                              </>
+                            ) : (
+                              <span className="muted" style={{ fontSize: '0.8rem' }}>No reviews yet</span>
+                            )}
                           </div>
-                        )}
+                          <button 
+                            className="btn btn-outline" 
+                            style={{ padding: '4px 10px', fontSize: '0.75rem' }}
+                            onClick={() => setReviewServiceId(service._id)}
+                          >
+                            Write a Review
+                          </button>
+                        </div>
                         
-                        <Link to={`/contact?service=${encodeURIComponent(service.name)}&price=${encodeURIComponent(service.price)}`} className="service-book-btn">
+                        <Link to={`/contact?service=${encodeURIComponent(service.name)}&price=${encodeURIComponent(service.price)}`} className="service-book-btn" style={{ marginTop: '1rem' }}>
                           <span>Book Consultation</span>
                           <div className="service-book-btn-icon">
                             <ArrowRight size={18} />
@@ -134,6 +150,17 @@ export default function Services() {
                   </motion.div>
                 ))}
               </div>
+              
+              {/* Review Modal */}
+              <ReviewModal 
+                isOpen={!!reviewServiceId}
+                serviceId={reviewServiceId}
+                onClose={() => setReviewServiceId(null)}
+                onSuccess={() => {
+                  setReviewServiceId(null)
+                  fetchServices()
+                }}
+              />
             </>
           )}
         </div>

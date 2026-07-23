@@ -266,3 +266,126 @@
     gap: 0.25rem;
   }
 }
+
+/* ---- Dropdown Selection ---- */
+.planner-dropdown-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.planner-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border: 2px solid var(--color-gold-300);
+  border-radius: var(--radius-md, 12px);
+  background: var(--color-bg);
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--color-ink);
+  transition: all 0.3s ease;
+}
+
+.planner-dropdown-header:hover {
+  border-color: var(--color-gold-500);
+}
+
+.dropdown-icon {
+  transition: transform 0.3s ease;
+  color: var(--color-gold-700);
+}
+
+.dropdown-icon.open {
+  transform: rotate(180deg);
+}
+
+.planner-dropdown-list {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  right: 0;
+  background: var(--color-bg);
+  border: 2px solid var(--color-gold-300);
+  border-radius: var(--radius-md, 12px);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+}
+
+.planner-dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-bottom: 1px solid var(--color-gold-100);
+}
+
+.planner-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.planner-dropdown-item:hover {
+  background: var(--color-bg-soft);
+}
+
+.planner-dropdown-item.selected {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(226, 142, 154, 0.08));
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.item-name {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.item-price {
+  font-size: 0.85rem;
+  color: var(--color-gold-700);
+  font-weight: 500;
+}
+
+.item-check {
+  color: var(--color-gold-700);
+  animation: pop-in 0.25s ease;
+}
+
+/* ---- Price Estimate ---- */
+.planner-price-estimate {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(226, 142, 154, 0.1));
+  border: 1px solid var(--color-gold-300);
+  border-radius: var(--radius-md, 12px);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.planner-price-estimate h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-ink);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.price-amount {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--color-gold-700);
+  font-weight: 700;
+}

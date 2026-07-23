@@ -162,3 +162,30 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================= FORM ACTIONS ============================= */
+.contact-form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap; /* ensures it doesn't overflow on mobile */
+}
+
+.contact-form-actions .btn {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.whatsapp-btn {
+  background: #25D366 !important;
+  border-color: #25D366 !important;
+  color: #fff !important;
+}
+
+.whatsapp-btn:hover {
+  background: #1da851 !important;
+}
