@@ -19,6 +19,7 @@ const serviceRoutes = require('./routes/services');
 const galleryRoutes = require('./routes/gallery');
 const testimonialRoutes = require('./routes/testimonials');
 const uploadRoutes = require('./routes/upload');
+const featuredRoutes = require('./routes/featured');
 
 // ─────────────────────────────────────────────
 // Initialize Express & HTTP Server
@@ -105,6 +106,7 @@ app.use('/api/services', serviceRoutes);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/featured', featuredRoutes);
 
 // ─────────────────────────────────────────────
 // Health Check Endpoint

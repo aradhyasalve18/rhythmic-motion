@@ -75,3 +75,9 @@ export const uploadAPI = {
     })
   },
 }
+
+// Featured Cards
+export const featuredAPI = {
+  getAll: () => api.get('/featured'),
+  updateAll: (cards) => api.put('/featured', { cards }),
+}

@@ -24,18 +24,61 @@ export default function Home() {
   const [servicesData, setServicesData] = useState([])
   const [testimonialsData, setTestimonialsData] = useState([])
   const [galleryData, setGalleryData] = useState([])
+  const [featuredCards, setFeaturedCards] = useState([
+    {
+      id: 'venues',
+      name: 'Royal Venues',
+      description: 'Discover majestic palaces, heritage resorts, and ultra-luxury banquets curated for grand celebrations.',
+      imageUrl: '/images/placeholder_venue_resort.jpg',
+      linkedCategory: 'All'
+    },
+    {
+      id: 'decor',
+      name: 'Exquisite Decor',
+      description: 'Bespoke floral arrangements, thematic mandap designs, and transformative lighting by master artisans.',
+      imageUrl: '/images/placeholder_decor_floral.jpg',
+      linkedCategory: 'All'
+    },
+    {
+      id: 'photo',
+      name: 'Cinematic Photography',
+      description: 'Award-winning photographers capturing your most intimate and spectacular moments in fine-art style.',
+      imageUrl: '/images/placeholder_photo_wedding.jpg',
+      linkedCategory: 'All'
+    },
+    {
+      id: 'styling',
+      name: 'Bridal Styling',
+      description: 'Elite makeup artists and bridal consultants to ensure you look flawless on your special day.',
+      imageUrl: '/images/placeholder_makeup_bridal.jpg',
+      linkedCategory: 'All'
+    }
+  ])
 
   const fetchAllData = async () => {
     try {
-      const [servicesRes, testimonialsRes, galleryRes] = await Promise.all([
+      const [servicesRes, testimonialsRes, galleryRes, featuredRes] = await Promise.all([
         axios.get(`${API_URL}/api/services`),
         axios.get(`${API_URL}/api/testimonials`),
-        axios.get(`${API_URL}/api/gallery`)
+        axios.get(`${API_URL}/api/gallery`),
+        axios.get(`${API_URL}/api/featured`).catch(() => null)
       ])
       
       setServicesData(servicesRes.data.data || [])
       setTestimonialsData(testimonialsRes.data.data || [])
       setGalleryData(galleryRes.data.data || [])
+
+      if (featuredRes && featuredRes.data && featuredRes.data.data && featuredRes.data.data.length > 0) {
+        const fetchedCards = featuredRes.data.data.map(c => ({
+          id: c._id,
+          name: c.title,
+          description: c.description,
+          imageUrl: c.imageUrl,
+          linkedCategory: c.linkedCategory || 'All'
+        }));
+        // Use fetched cards for whatever slots they fill, fallback to existing for rest
+        setFeaturedCards(prev => prev.map((fallback, i) => fetchedCards[i] || fallback));
+      }
     } catch (err) {
       console.error('Error fetching home data:', err)
     }
@@ -47,8 +90,9 @@ export default function Home() {
     const socket = io(API_URL)
     
     socket.on('content_updated', (payload) => {
-      // If any of the content updates, refetch the home data
-      fetchAllData()
+      if (['services', 'testimonials', 'gallery', 'featured'].includes(payload.type)) {
+        fetchAllData()
+      }
     })
 
     return () => {
@@ -105,34 +149,9 @@ export default function Home() {
           </div>
 
           <div className="style-grid">
-            {[
-              {
-                id: 'venues',
-                name: 'Royal Venues',
-                description: 'Discover majestic palaces, heritage resorts, and ultra-luxury banquets curated for grand celebrations.',
-                imageUrl: '/images/placeholder_venue_resort.jpg'
-              },
-              {
-                id: 'decor',
-                name: 'Exquisite Decor',
-                description: 'Bespoke floral arrangements, thematic mandap designs, and transformative lighting by master artisans.',
-                imageUrl: '/images/placeholder_decor_floral.jpg'
-              },
-              {
-                id: 'photo',
-                name: 'Cinematic Photography',
-                description: 'Award-winning photographers capturing your most intimate and spectacular moments in fine-art style.',
-                imageUrl: '/images/placeholder_photo_wedding.jpg'
-              },
-              {
-                id: 'styling',
-                name: 'Bridal Styling',
-                description: 'Elite makeup artists and bridal consultants to ensure you look flawless on your special day.',
-                imageUrl: '/images/placeholder_makeup_bridal.jpg'
-              }
-            ].map(({ id, name, description, imageUrl }, index) => (
+            {featuredCards.map(({ id, name, description, imageUrl, linkedCategory }, index) => (
               <Link
-                to="/services"
+                to={`/services${linkedCategory && linkedCategory !== 'All' ? `?category=${encodeURIComponent(linkedCategory)}` : ''}`}
                 key={id}
                 className="style-card card scroll-reveal"
                 style={{ transitionDelay: `${index * 100}ms` }}

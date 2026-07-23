@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Sparkles, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import axios from 'axios'
@@ -11,9 +11,12 @@ import './Services.css'
 const API_URL = import.meta.env.VITE_API_URL || 'https://theweddingbells.onrender.com'
 
 export default function Services() {
+  const [searchParams] = useSearchParams()
+  const categoryParam = searchParams.get('category')
+
   const [servicesData, setServicesData] = useState([])
   const [categories, setCategories] = useState(['All'])
-  const [activeStyle, setActiveStyle] = useState('All')
+  const [activeStyle, setActiveStyle] = useState(categoryParam || 'All')
   const [loading, setLoading] = useState(true)
   const [reviewServiceId, setReviewServiceId] = useState(null)
 
@@ -49,6 +52,15 @@ export default function Services() {
       socket.disconnect()
     }
   }, [])
+
+  useEffect(() => {
+    if (categoryParam && categories.includes(categoryParam)) {
+      setActiveStyle(categoryParam)
+    } else if (categoryParam && !categories.includes(categoryParam) && categories.length > 1) {
+      // In case the categories list hasn't loaded yet, it will re-run when categories changes
+      setActiveStyle(categoryParam)
+    }
+  }, [categoryParam, categories])
 
   const filtered = useMemo(() => {
     if (activeStyle === 'All') return servicesData

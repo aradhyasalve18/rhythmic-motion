@@ -47,3 +47,32 @@
   padding: 20px;
   background-color: #0d0d0d;
 }
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  .dashboard-header {
+    padding: 0 15px;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.1rem;
+  }
+
+  .logout-btn {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+}
