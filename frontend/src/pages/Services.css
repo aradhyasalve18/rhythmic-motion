@@ -18,7 +18,7 @@
 
 .classes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2.5rem;
 }
 
@@ -35,9 +35,10 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.04);
 }
 .service-detail-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-  border-color: var(--color-gold);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+  border-color: var(--color-gold-300);
+  border-top: 2px solid var(--color-gold-500);
 }
 
 .service-detail-card-img-wrapper {

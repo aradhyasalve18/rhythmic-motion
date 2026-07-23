@@ -102,7 +102,8 @@
   gap: 1rem;
   padding: 1rem 1.25rem;
   border-radius: var(--radius-md);
-  border: 1.5px solid rgba(212, 162, 59, 0.15);
+  border: 1px solid rgba(212, 162, 59, 0.15);
+  border-left: 3px solid var(--color-pink-300);
   background: var(--color-cream-paper);
   transition: all 0.2s ease;
 }
@@ -110,6 +111,7 @@
 .contact-quick-btn:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-card);
+  border-left-color: var(--color-pink-500);
 }
 
 .contact-quick-btn svg {

@@ -78,6 +78,7 @@
   min-height: 380px;
   display: flex;
   flex-direction: column;
+  border-top: 3px solid var(--color-gold-300);
 }
 
 .planner-step {
@@ -117,7 +118,7 @@
 .planner-service-option:hover {
   border-color: var(--color-gold-500);
   background: var(--color-bg-soft);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 .planner-service-option.is-selected {
   border-color: var(--color-gold-500);

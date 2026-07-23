@@ -32,8 +32,8 @@
 }
 
 .gallery-item:hover {
-  transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 28px 48px -20px rgba(43, 24, 16, 0.35);
+  transform: translateY(-4px) scale(1.0);
+  box-shadow: 0 16px 40px -20px rgba(43, 24, 16, 0.2);
 }
 
 .gallery-item-img {
@@ -44,7 +44,7 @@
 }
 
 .gallery-item:hover .gallery-item-img {
-  transform: scale(1.12);
+  transform: scale(1.05);
 }
 
 .gallery-item-overlay {

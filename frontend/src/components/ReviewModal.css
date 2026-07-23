@@ -20,13 +20,14 @@
   border-radius: var(--radius-lg);
   padding: 2.5rem 2rem;
   position: relative;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  animation: modal-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(212, 162, 59, 0.2);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  animation: modal-fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes modal-pop {
-  0% { transform: scale(0.9); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+@keyframes modal-fade-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }
 
 .modal-close {

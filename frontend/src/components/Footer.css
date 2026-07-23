@@ -2,6 +2,7 @@
   background: #1a0e12;
   color: #f0e6e0;
   margin-top: auto;
+  border-top: 2px solid rgba(220, 201, 160, 0.25);
 }
 
 /* ===== Banner CTA ===== */
@@ -50,7 +51,7 @@
 
 .footer-col h4 {
   font-family: var(--font-display);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: 1.1rem;
   color: #ffffff;
@@ -177,6 +178,11 @@
 @media (max-width: 560px) {
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .footer-banner-inner {
+    justify-content: center;
+    text-align: center;
   }
 
   .footer-bottom {

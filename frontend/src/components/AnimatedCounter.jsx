@@ -19,24 +19,31 @@ export default function AnimatedCounter({ value, duration = 1500 }) {
   useEffect(() => {
     if (!inView) return
 
-    let startTimestamp = null
+    let animationFrameId;
+    let startTimestamp = null;
     const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp
-      const elapsed = timestamp - startTimestamp
-      const progress = Math.min(elapsed / duration, 1)
+      if (!startTimestamp) startTimestamp = timestamp;
+      const elapsed = timestamp - startTimestamp;
+      const progress = Math.min(elapsed / duration, 1);
 
       // Easing out quad
-      const easeProgress = progress * (2 - progress)
-      const current = Math.floor(easeProgress * target)
-      setCount(current)
+      const easeProgress = progress * (2 - progress);
+      const current = Math.floor(easeProgress * target);
+      setCount(current);
 
       if (progress < 1) {
-        window.requestAnimationFrame(step)
+        animationFrameId = window.requestAnimationFrame(step);
       } else {
-        setCount(target)
+        setCount(target);
       }
-    }
-    window.requestAnimationFrame(step)
+    };
+    animationFrameId = window.requestAnimationFrame(step);
+
+    return () => {
+      if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, [inView, target, duration])
 
   const formatNumber = (num) => {

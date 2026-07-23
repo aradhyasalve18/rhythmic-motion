@@ -66,7 +66,7 @@ export default function Home() {
   return (
     <>
       {/* ---------------------------- HERO ---------------------------- */}
-      <section className="hero">
+      <section className="hero" style={{ backgroundColor: '#1e1215' }}>
         {heroImages.map((img, i) => (
           <div
             key={img}
@@ -105,10 +105,35 @@ export default function Home() {
           </div>
 
           <div className="style-grid">
-            {servicesData.slice(0, 4).map(({ _id, name, description, imageUrl }, index) => (
+            {[
+              {
+                id: 'venues',
+                name: 'Royal Venues',
+                description: 'Discover majestic palaces, heritage resorts, and ultra-luxury banquets curated for grand celebrations.',
+                imageUrl: '/images/placeholder_venue_resort.jpg'
+              },
+              {
+                id: 'decor',
+                name: 'Exquisite Decor',
+                description: 'Bespoke floral arrangements, thematic mandap designs, and transformative lighting by master artisans.',
+                imageUrl: '/images/placeholder_decor_floral.jpg'
+              },
+              {
+                id: 'photo',
+                name: 'Cinematic Photography',
+                description: 'Award-winning photographers capturing your most intimate and spectacular moments in fine-art style.',
+                imageUrl: '/images/placeholder_photo_wedding.jpg'
+              },
+              {
+                id: 'styling',
+                name: 'Bridal Styling',
+                description: 'Elite makeup artists and bridal consultants to ensure you look flawless on your special day.',
+                imageUrl: '/images/placeholder_makeup_bridal.jpg'
+              }
+            ].map(({ id, name, description, imageUrl }, index) => (
               <Link
                 to="/services"
-                key={_id}
+                key={id}
                 className="style-card card scroll-reveal"
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
@@ -122,12 +147,6 @@ export default function Home() {
                 </div>
               </Link>
             ))}
-            
-            {servicesData.length === 0 && (
-               <div style={{ textAlign: 'center', gridColumn: '1 / -1', padding: '2rem', color: 'var(--color-ink)' }}>
-                 More premium services coming soon.
-               </div>
-            )}
           </div>
         </div>
       </section>
@@ -180,18 +199,7 @@ export default function Home() {
         </div>
       </section>
       
-      {/* -------------------------- BOTTOM CTA -------------------------- */}
-      <section className="section center" style={{ backgroundColor: 'var(--color-paper-dark)' }}>
-        <div className="container scroll-reveal">
-          <h2 className="h2" style={{ marginBottom: '1.5rem' }}>Ready to Begin Your Journey?</h2>
-          <p className="lead" style={{ maxWidth: '600px', margin: '0 auto 2.5rem', color: 'var(--color-gray)' }}>
-            Let us turn your vision into a breathtaking reality. Schedule a consultation with our expert wedding planners today.
-          </p>
-          <Link to="/contact" className="btn btn-gold btn-large">
-            Contact Us Now
-          </Link>
-        </div>
-      </section>
+      {/* -------------------------- BOTTOM CTA (Removed to fix duplicate gap) -------------------------- */}
     </>
   )
 }
