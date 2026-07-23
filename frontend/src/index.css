@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 /* ===================== Design Tokens ===================== */
 :root {
-  /* Rose / Pink scale — rich, romantic, high contrast */
+  /* Pink scale — romantic, warm, elegant */
   --color-bg: #fef9f6;
   --color-bg-soft: #fdf0ea;
-  --color-peach-100: #fbe1d8;
-  --color-peach-300: #e8a5a0;
-  --color-peach-500: #c76b78;
-  --color-peach-700: #9e3f55;
+  --color-beige: #fdf0ea;
+  --color-pink-100: #fbe1d8;
+  --color-pink-300: #e8a5a0;
+  --color-pink-500: #c76b78;
+  --color-pink-700: #9e3f55;
 
   /* Gold scale — true metallic gold */
   --color-gold-300: #dcc9a0;
@@ -24,7 +25,7 @@
 
   /* Gradients */
   --gradient-gold: linear-gradient(135deg, #e6cfa1 0%, #d4af37 50%, #e6cfa1 100%);
-  --gradient-peach: linear-gradient(135deg, #fbe1d8 0%, #f1c7bd 50%, #fbe1d8 100%);
+  --gradient-pink: linear-gradient(135deg, #fbe1d8 0%, #f1c7bd 50%, #fbe1d8 100%);
   --gradient-spotlight: linear-gradient(135deg, #fdf0ea 0%, #fbe1d8 50%, #fdf0ea 100%);
 
   /* Type */
@@ -38,9 +39,9 @@
   --radius-lg: 1.85rem;
   --radius-pill: 999px;
 
-  /* Shadow */
-  --shadow-soft: 0 24px 48px -24px rgba(30, 18, 21, 0.22);
-  --shadow-card: 0 14px 28px -16px rgba(30, 18, 21, 0.18);
+  /* Shadows — soft & diffused for premium feel */
+  --shadow-soft: 0 20px 40px -20px rgba(30, 18, 21, 0.08);
+  --shadow-card: 0 8px 24px -12px rgba(30, 18, 21, 0.06);
 
   --container-width: 1180px;
   --header-height: 112px;
@@ -71,7 +72,7 @@ body {
   color: var(--color-ink);
   font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -134,7 +135,7 @@ main {
 }
 
 .section-soft {
-  background: var(--color-bg-soft);
+  background: var(--color-beige);
 }
 
 .section-head {
@@ -162,7 +163,7 @@ main {
   font-style: italic;
   font-weight: 600;
   color: var(--color-gold-700);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
   font-size: clamp(1.05rem, 1.4vw, 1.2rem);
   margin-bottom: 0.5rem;
   display: inline-block;
@@ -170,9 +171,10 @@ main {
 
 .section-title {
   font-family: var(--font-display);
-  letter-spacing: 0.015em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   font-size: clamp(2.1rem, 4.2vw, 3.1rem);
+  font-weight: 500;
   line-height: 1.04;
   color: var(--color-ink);
 }
@@ -181,7 +183,7 @@ main {
   font-size: clamp(1rem, 1.4vw, 1.1rem);
   color: var(--color-ink-soft);
   margin-top: 0.85rem;
-  line-height: 1.65;
+  line-height: 1.75;
 }
 
 /* ===================== Buttons ===================== */
@@ -197,26 +199,24 @@ main {
   border-radius: var(--radius-pill);
   border: none;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
   white-space: nowrap;
 }
 
 .btn:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
 }
 
 .btn-gold {
   background: var(--gradient-gold);
-  background-size: 200% 200%;
-  animation: shimmer 4s ease-in-out infinite;
+  background-size: 100% 100%;
   color: var(--color-ink);
-  box-shadow: 0 12px 22px -10px rgba(212, 162, 59, 0.7);
+  box-shadow: 0 8px 20px -8px rgba(212, 162, 59, 0.45);
 }
 
 .btn-gold:hover {
-  box-shadow: 0 16px 28px -10px rgba(212, 162, 59, 0.85);
-  transform: translateY(-2px);
-  animation: shimmer 2s ease-in-out infinite;
+  box-shadow: 0 12px 28px -8px rgba(212, 162, 59, 0.6);
+  transform: translateY(-1px);
 }
 
 .btn-outline {
@@ -226,17 +226,18 @@ main {
 }
 
 .btn-outline:hover {
-  background: var(--color-gold-300);
-  border-color: var(--color-gold-300);
+  background: rgba(220, 201, 160, 0.25);
+  border-color: var(--color-gold-700);
+  color: var(--color-gold-700);
 }
 
-.btn-peach {
-  background: var(--color-peach-500);
+.btn-pink {
+  background: var(--color-pink-500);
   color: #fff3ea;
 }
 
-.btn-peach:hover {
-  background: var(--color-peach-700);
+.btn-pink:hover {
+  background: var(--color-pink-700);
 }
 
 .btn-ghost {
@@ -265,19 +266,18 @@ main {
   padding: 0.5rem 1.1rem;
   border-radius: var(--radius-pill);
   background: var(--color-cream-paper);
-  border: 1px solid var(--color-peach-300);
+  border: 1px solid var(--color-pink-300);
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--color-ink-soft);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .chip.is-active,
 .chip:hover {
   background: var(--gradient-gold);
-  background-size: 200% 200%;
-  animation: shimmer 4s ease-in-out infinite;
+  background-size: 100% 100%;
   color: var(--color-ink);
   border-color: transparent;
 }
@@ -299,15 +299,13 @@ main {
   background: var(--color-cream-paper);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
-  border: 1px solid rgba(212, 162, 59, 0.15);
+  border: 1px solid rgba(212, 162, 59, 0.1);
 }
 
 /* ===================== Page header (inner pages) ===================== */
 .page-header {
   padding: calc(var(--header-height) + 2.75rem) 0 3rem;
   background: var(--gradient-spotlight);
-  background-size: 200% 200%;
-  animation: shimmer 12s ease-in-out infinite;
   text-align: center;
 }
 
@@ -343,10 +341,10 @@ main {
   font-size: 0.95rem;
   padding: 0.8rem 1rem;
   border-radius: var(--radius-sm);
-  border: 1.5px solid var(--color-peach-300);
+  border: 1.5px solid var(--color-pink-300);
   background: #fff;
   color: var(--color-ink);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .form-field input:focus,
@@ -354,7 +352,7 @@ main {
 .form-field textarea:focus {
   border-color: var(--color-gold-500);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(212, 162, 59, 0.2);
+  box-shadow: 0 0 0 3px rgba(212, 162, 59, 0.12);
 }
 
 .form-field textarea {
@@ -402,6 +400,18 @@ main {
   }
 }
 
+@media (max-width: 480px) {
+  .container {
+    padding-inline: 1.25rem;
+  }
+  .section {
+    padding: clamp(2rem, 5vw, 3.5rem) 0;
+  }
+  .section-title {
+    font-size: clamp(1.7rem, 5vw, 2.2rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -415,8 +425,8 @@ main {
 
 /* ===================== Custom Scrollbar ===================== */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -424,13 +434,13 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-peach-300);
+  background: var(--color-pink-300);
   border-radius: var(--radius-pill);
   border: 2px solid var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-peach-500);
+  background: var(--color-pink-500);
 }
 
 /* ===================== Entrance Animations ===================== */
@@ -472,8 +482,8 @@ main {
 /* Scroll-triggered reveal animations */
 .scroll-reveal {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
 
